@@ -53,8 +53,13 @@ const FormSchema = v.object({
 
 type FormValues = v.InferInput<typeof FormSchema>;
 
+type QrData = Record<
+  string,
+  string | boolean | number | Record<string, string>
+>;
+
 export default function QRCodeForm() {
-  const [qrValue, setQrValue] = useState<string | null>(null);
+  const [qrValue, setQrValue] = useState<QrData | null>(null);
   const [showJson, setShowJson] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
@@ -89,10 +94,7 @@ export default function QRCodeForm() {
         downloadLocation = `https://apt.izzysoft.de/fdroid/repo/uk.nktnet.webviewkiosk_${LATEST_VERSION.code}.apk`;
       }
 
-      const payload: Record<
-        string,
-        string | boolean | number | Record<string, string>
-      > = {
+      const payload: QrData = {
         "android.app.extra.PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME":
           "uk.nktnet.webviewkiosk/.WebviewKioskAdminReceiver",
         "android.app.extra.PROVISIONING_DEVICE_ADMIN_PACKAGE_DOWNLOAD_LOCATION":
@@ -150,7 +152,7 @@ export default function QRCodeForm() {
         }
       }
 
-      setQrValue(JSON.stringify(payload, null, 2));
+      setQrValue(payload);
     },
   });
 
@@ -531,7 +533,11 @@ export default function QRCodeForm() {
         <div className="flex flex-col w-full">
           <div className="mt-10 flex flex-col items-center gap-4">
             <div className="border-2 border-white">
-              <QRCode className="max-w-full" value={qrValue} size={400} />
+              <QRCode
+                className="max-w-full"
+                value={JSON.stringify(qrValue)}
+                size={400}
+              />
             </div>
             <p className="text-sm opacity-70 break-all">
               Scan during device setup
@@ -547,7 +553,10 @@ export default function QRCodeForm() {
           </div>
           {showJson && (
             <div className="text-left mt-3">
-              <DynamicCodeBlock lang="json" code={qrValue} />
+              <DynamicCodeBlock
+                lang="json"
+                code={JSON.stringify(qrValue, null, 2)}
+              />
             </div>
           )}
         </div>
