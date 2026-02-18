@@ -530,7 +530,9 @@ export default function QRCodeForm() {
       {qrValue && (
         <div className="flex flex-col w-full">
           <div className="mt-10 flex flex-col items-center gap-4">
-            <QRCode className="max-w-full" value={qrValue} size={400} />
+            <div className="border-2 border-white">
+              <QRCode className="max-w-full" value={qrValue} size={400} />
+            </div>
             <p className="text-sm opacity-70 break-all">
               Scan during device setup
             </p>
