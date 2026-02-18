@@ -25,7 +25,7 @@ import { toast } from "sonner";
 const LATEST_VERSION = {
   code: 114,
   tag: "v0.26.0",
-  checksum: "56c455c3b0fb69ff344e8a2278d865ba80f0e4dad3d1d1e4b777ae637eace769",
+  checksum: "VsRVw7D7af80TooieNhluoDw5NrT0dHkt3euY36s52k=",
 } as const;
 
 const DownloadSource = v.picklist(["GitHub", "F-Droid", "IzzyOnDroid"]);
@@ -229,7 +229,7 @@ export default function QRCodeForm() {
               <form.Field
                 name="leaveAllSystemAppsEnabled"
                 children={(field) => (
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 mt-2">
                     <Checkbox
                       id={field.name}
                       checked={field.state.value}
@@ -279,7 +279,7 @@ export default function QRCodeForm() {
               <form.Field
                 name="locale"
                 children={(field) => (
-                  <div className="text-left">
+                  <div className="text-left mt-3">
                     <Label htmlFor={field.name}>Locale</Label>
                     <Input
                       id={field.name}
